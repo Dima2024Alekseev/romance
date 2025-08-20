@@ -9,6 +9,146 @@
         href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Dancing+Script:wght@500&display=swap"
         rel="stylesheet">
     <style>
+        /* Стили для прелоадера */
+        .preloader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #2b1e34 0%, #4a304d 30%, #6a457a 70%, #8e5c9d 100%);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            transition: opacity 0.5s ease, visibility 0.5s ease;
+        }
+
+        .preloader.hidden {
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        .loader {
+            width: 60px;
+            height: 60px;
+            position: relative;
+            margin-bottom: 20px;
+        }
+
+        .loader-inner {
+            position: absolute;
+            border: 4px solid transparent;
+            border-top: 4px solid #ff7aa7;
+            border-radius: 50%;
+            width: 100%;
+            height: 100%;
+            animation: spin 1.5s linear infinite;
+        }
+
+        .loader-inner:nth-child(2) {
+            border: 4px solid transparent;
+            border-bottom: 4px solid #ffd9ec;
+            animation: spin-reverse 1.5s linear infinite;
+        }
+
+        .preloader-text {
+            color: #ffd9ec;
+            font-family: 'Dancing Script', cursive;
+            font-size: 1.8rem;
+            text-align: center;
+            margin-top: 15px;
+            text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+        }
+
+        .preloader-subtext {
+            color: #e6c6e6;
+            font-family: 'Dancing Script', cursive;
+            font-size: 1.2rem;
+            margin-top: 10px;
+            opacity: 0.8;
+        }
+
+        .progress-bar {
+            width: 250px;
+            height: 10px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 10px;
+            margin-top: 20px;
+            overflow: hidden;
+        }
+
+        .progress {
+            height: 100%;
+            width: 0%;
+            background: linear-gradient(90deg, #ff7aa7, #ffd9ec);
+            border-radius: 10px;
+            transition: width 0.3s ease;
+        }
+
+        .hearts-container {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+        }
+
+        .preloader-heart {
+            position: absolute;
+            color: #ff7aa7;
+            font-size: 20px;
+            opacity: 0;
+            animation: preloaderHeartFloat 5s ease-in-out infinite;
+            text-shadow: 0 0 10px rgba(255, 150, 200, 0.7);
+        }
+
+        @keyframes preloaderHeartFloat {
+            0% {
+                opacity: 0;
+                transform: translateY(0) scale(0.8) rotate(0deg);
+            }
+
+            20% {
+                opacity: 0.9;
+            }
+
+            50% {
+                opacity: 0.7;
+                transform: translateY(-40px) scale(1.1) rotate(20deg);
+            }
+
+            90% {
+                opacity: 0.3;
+            }
+
+            100% {
+                opacity: 0;
+                transform: translateY(-80px) scale(0.9) rotate(40deg);
+            }
+        }
+
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        @keyframes spin-reverse {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(-360deg);
+            }
+        }
+
+        /* Остальные стили остаются без изменений */
         * {
             margin: 0;
             padding: 0;
@@ -28,6 +168,15 @@
             overflow-x: hidden;
             padding: 20px;
             color: #fff;
+            opacity: 0;
+            animation: fadeInBody 1s ease forwards;
+            animation-delay: 0.5s;
+        }
+
+        @keyframes fadeInBody {
+            to {
+                opacity: 1;
+            }
         }
 
         .header {
@@ -417,6 +566,20 @@
 </head>
 
 <body>
+    <!-- Прелоадер -->
+    <div class="preloader" id="preloader">
+        <div class="loader">
+            <div class="loader-inner"></div>
+            <div class="loader-inner"></div>
+        </div>
+        <div class="preloader-text">Загрузка волшебства...</div>
+        <div class="preloader-subtext">Секундочку, готовим сюрприз</div>
+        <div class="progress-bar">
+            <div class="progress" id="progress"></div>
+        </div>
+        <div class="hearts-container" id="preloader-hearts"></div>
+    </div>
+
     <div class="header">
         <h1>С Днём Рождения !!!</h1>
         <p>Пусть каждый момент этого дня будет наполнен счастьем, как наши лучшие воспоминания вместе</p>
@@ -425,22 +588,22 @@
     <div class="collage-container">
         <div class="collage">
             <div class="photo-frame photo1">
-                <img src="./img/test1.jpg" alt="Наше фото 1">
+                <img src="./img/test1.jpg" alt="Наше фото 1" onload="imageLoaded()">
             </div>
             <div class="photo-frame photo2">
-                <img src="./img/test2.png" alt="Наше фото 2">
+                <img src="./img/test2.png" alt="Наше фото 2" onload="imageLoaded()">
             </div>
             <div class="photo-frame photo3">
-                <img src="./img/test1.jpg" alt="Наше фото 3">
+                <img src="./img/test1.jpg" alt="Наше фото 3" onload="imageLoaded()">
             </div>
             <div class="photo-frame photo4">
-                <img src="./img/test3.jpg" alt="Наше фото 4">
+                <img src="./img/test3.jpg" alt="Наше фото 4" onload="imageLoaded()">
             </div>
             <div class="photo-frame photo5">
-                <img src="./img/test2.png" alt="Наше фото 5">
+                <img src="./img/test2.png" alt="Наше фото 5" onload="imageLoaded()">
             </div>
             <div class="photo-frame photo6">
-                <img src="./img/test2.png" alt="Наше фото 6">
+                <img src="./img/test2.png" alt="Наше фото 6" onload="imageLoaded()">
             </div>
         </div>
 
@@ -458,6 +621,64 @@
     </div>
 
     <script>
+        // Обработка загрузки изображений
+        let loadedImages = 0;
+        const totalImages = document.querySelectorAll('img').length;
+        const minDisplayTime = 5000; // 5 секунд минимальное время отображения прелоадера
+        let startTime = Date.now();
+        let imagesLoaded = false;
+        let minTimeElapsed = false;
+
+        // Обновление прогресс-бара
+        function updateProgress() {
+            const progress = document.getElementById('progress');
+            const percentage = Math.min(100, Math.round((loadedImages / totalImages) * 100));
+            progress.style.width = `${percentage}%`;
+        }
+
+        function imageLoaded() {
+            loadedImages++;
+            updateProgress();
+
+            if (loadedImages === totalImages) {
+                imagesLoaded = true;
+                checkIfReadyToHide();
+            }
+        }
+
+        function checkIfReadyToHide() {
+            const elapsed = Date.now() - startTime;
+            const remaining = minDisplayTime - elapsed;
+
+            if (remaining <= 0) {
+                hidePreloader();
+            } else {
+                setTimeout(hidePreloader, remaining);
+            }
+        }
+
+        function hidePreloader() {
+            minTimeElapsed = true;
+            if (imagesLoaded) {
+                const preloader = document.getElementById('preloader');
+                preloader.classList.add('hidden');
+
+                // Показываем основное содержимое
+                document.body.style.opacity = "1";
+            }
+        }
+
+        // Устанавливаем минимальное время отображения прелоадера
+        setTimeout(checkIfReadyToHide, minDisplayTime);
+
+        // На случай, если какое-то изображение не загрузится
+        setTimeout(function () {
+            if (!imagesLoaded) {
+                imagesLoaded = true;
+                checkIfReadyToHide();
+            }
+        }, 10000);
+
         // Динамическое добавление мерцающих частиц
         document.addEventListener('DOMContentLoaded', function () {
             const container = document.querySelector('.collage-container');
@@ -478,6 +699,28 @@
 
                 container.appendChild(sparkle);
             }
+
+            // Добавляем сердца в прелоадер
+            const preloaderHearts = document.getElementById('preloader-hearts');
+            for (let i = 0; i < 10; i++) {
+                const heart = document.createElement('div');
+                heart.classList.add('preloader-heart');
+                heart.innerHTML = '♥';
+
+                // Случайная позиция
+                const left = Math.random() * 100;
+                const top = 80 + Math.random() * 20;
+                heart.style.left = `${left}%`;
+                heart.style.top = `${top}%`;
+
+                // Случайная задержка
+                heart.style.animationDelay = `${Math.random() * 5}s`;
+
+                preloaderHearts.appendChild(heart);
+            }
+
+            // Запускаем отсчет времени
+            startTime = Date.now();
         });
     </script>
 </body>
