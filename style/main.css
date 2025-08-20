@@ -14,6 +14,13 @@
     transition: opacity 0.5s ease, visibility 0.5s ease;
 }
 
+body.preloader-active {
+    overflow: hidden;
+    height: 100vh;
+    position: fixed;
+    width: 100%;
+}
+
 .preloader.hidden {
     opacity: 0;
     visibility: hidden;
@@ -137,7 +144,6 @@
     }
 }
 
-/* Остальные стили остаются без изменений */
 * {
     margin: 0;
     padding: 0;
@@ -509,7 +515,7 @@ body {
 .footer {
     margin-top: 40px;
     text-align: center;
-    font-size: 0.9rem;
+    font-size: 1.2rem;
     opacity: 0.8;
     animation: fadeIn 2.5s ease;
 }
@@ -559,6 +565,10 @@ body {
 
     .header p {
         font-size: 1rem;
+    }
+
+    .footer{
+        font-size: 1.0rem;
     }
 }
 

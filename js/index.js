@@ -1,10 +1,12 @@
 // Обработка загрузки изображений
 let loadedImages = 0;
 const totalImages = document.querySelectorAll('img').length;
-const minDisplayTime = 5000; // 5 секунд минимальное время отображения прелоадера
+const minDisplayTime = 5000;
 let startTime = Date.now();
 let imagesLoaded = false;
 let minTimeElapsed = false;
+
+document.body.classList.add('preloader-active');
 
 // Обновление прогресс-бара
 function updateProgress() {
@@ -40,10 +42,10 @@ function hidePreloader() {
         const preloader = document.getElementById('preloader');
         preloader.classList.add('hidden');
 
-        // Показываем основное содержимое
+        document.body.classList.remove('preloader-active');
+
         document.body.style.opacity = "1";
 
-        // Запускаем анимацию текста
         startTextAnimation();
     }
 }
