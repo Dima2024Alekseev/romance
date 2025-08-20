@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Романтический фотоколлаж с плавной анимацией фона</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 20px;
+            background: linear-gradient(135deg, #2b1e34 0%, #4a304d 100%);
+            background-size: 400% 400%;
+            /* Увеличиваем размер градиента для плавной анимации */
+            animation: gradientAnimation 15s ease infinite;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            overflow: hidden;
+        }
+
+        .collage {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            grid-gap: 20px;
+            width: 800px;
+            padding: 20px;
+            position: relative;
+        }
+
+        .collage img {
+            width: 100%;
+            height: auto;
+            object-fit: cover;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+            border-radius: 8px;
+            filter: brightness(0.9) sepia(0.2);
+            border: 2px solid white;
+        }
+
+        .photo1 {
+            grid-column: 1 / 2;
+            grid-row: 1 / 2;
+            width: 200px;
+            animation: rotate1 23s ease-in-out infinite;
+        }
+
+        .photo2 {
+            grid-column: 2 / 3;
+            grid-row: 1 / 2;
+            width: 250px;
+            animation: rotate2 22s ease-in-out infinite;
+        }
+
+        .photo3 {
+            grid-column: 3 / 4;
+            grid-row: 1 / 2;
+            width: 180px;
+            animation: rotate3 18s ease-in-out infinite;
+        }
+
+        .photo4 {
+            grid-column: 1 / 2;
+            grid-row: 2 / 3;
+            width: 220px;
+            animation: rotate4 15s ease-in-out infinite;
+        }
+
+        .photo5 {
+            grid-column: 2 / 3;
+            grid-row: 2 / 3;
+            width: 200px;
+            animation: rotate5 20s ease-in-out infinite;
+        }
+
+        .photo6 {
+            grid-column: 3 / 4;
+            grid-row: 2 / 3;
+            width: 240px;
+            animation: rotate6 25s ease-in-out infinite;
+        }
+
+        @keyframes rotate1 {
+
+            0%,
+            100% {
+                transform: rotate(-5deg);
+            }
+
+            50% {
+                transform: rotate(5deg);
+            }
+        }
+
+        @keyframes rotate2 {
+
+            0%,
+            100% {
+                transform: rotate(3deg);
+            }
+
+            50% {
+                transform: rotate(-4deg);
+            }
+        }
+
+        @keyframes rotate3 {
+
+            0%,
+            100% {
+                transform: rotate(7deg);
+            }
+
+            50% {
+                transform: rotate(-3deg);
+            }
+        }
+
+        @keyframes rotate4 {
+
+            0%,
+            100% {
+                transform: rotate(-3deg);
+            }
+
+            50% {
+                transform: rotate(6deg);
+            }
+        }
+
+        @keyframes rotate5 {
+
+            0%,
+            100% {
+                transform: rotate(5deg);
+            }
+
+            50% {
+                transform: rotate(-5deg);
+            }
+        }
+
+        @keyframes rotate6 {
+
+            0%,
+            100% {
+                transform: rotate(-7deg);
+            }
+
+            50% {
+                transform: rotate(4deg);
+            }
+        }
+
+        /* Улучшенная плавная анимация градиентного фона */
+        @keyframes gradientAnimation {
+            0% {
+                background-position: 0% 50%;
+            }
+
+            50% {
+                background-position: 100% 50%;
+            }
+
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+
+        /* Анимация сердец */
+        .heart {
+            position: absolute;
+            color: #ff6f91;
+            /* Нежно-розовый цвет сердец */
+            font-size: 20px;
+            opacity: 0;
+            animation: heartFloat 5s ease-in-out infinite;
+            pointer-events: none;
+        }
+
+        .heart1 {
+            top: 10%;
+            left: 5%;
+            animation-delay: 0s;
+        }
+
+        .heart2 {
+            top: 20%;
+            left: 80%;
+            animation-delay: 1s;
+        }
+
+        .heart3 {
+            top: 60%;
+            left: 15%;
+            animation-delay: 2s;
+        }
+
+        .heart4 {
+            top: 70%;
+            left: 70%;
+            animation-delay: 3s;
+        }
+
+        .heart5 {
+            top: 30%;
+            left: 50%;
+            animation-delay: 4s;
+        }
+
+        @keyframes heartFloat {
+            0% {
+                opacity: 0;
+                transform: translateY(0) scale(1);
+            }
+
+            50% {
+                opacity: 0.8;
+                transform: translateY(-50px) scale(1.2);
+            }
+
+            100% {
+                opacity: 0;
+                transform: translateY(-100px) scale(1);
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="collage">
+        <img src="./img/test1.png" alt="Photo 2" class="photo2">
+        <img src="./img/test2.png" alt="Photo 3" class="photo3">
+        <img src="./img/test1.png" alt="Photo 4" class="photo4">
+        <img src="./img/test3.jpg" alt="Photo 5" class="photo5">
+        <img src="./img/test2.png" alt="Photo 1" class="photo1">
+        <img src="./img/test2.png" alt="Photo 6" class="photo6">
+        <div class="heart heart1">♥</div>
+        <div class="heart heart2">♥</div>
+        <div class="heart heart3">♥</div>
+        <div class="heart heart4">♥</div>
+        <div class="heart heart5">♥</div>
+    </div>
+</body>
+
+</html>
