@@ -1,3 +1,23 @@
+// Инициализация частиц фона
+document.addEventListener('DOMContentLoaded', function () {
+    particlesJS('particles-js', {
+        particles: {
+            number: { value: 30, density: { enable: true, value_area: 800 } },
+            color: { value: "#ffd9ec" },
+            shape: { type: "circle" },
+            opacity: { value: 0.5, random: true },
+            size: { value: 5, random: true },
+            line_linked: { enable: false },
+            move: { enable: true, speed: 2, direction: "none", random: true, out_mode: "out" }
+        },
+        interactivity: {
+            detect_on: "canvas",
+            events: { onhover: { enable: true, mode: "bubble" }, onclick: { enable: true, mode: "repulse" } },
+            modes: { bubble: { distance: 100, size: 10, duration: 2, opacity: 0.8 }, repulse: { distance: 100, duration: 0.4 } }
+        }
+    });
+});
+
 // Обработка загрузки изображений
 let loadedImages = 0;
 const totalImages = document.querySelectorAll('img').length;
@@ -47,6 +67,7 @@ function hidePreloader() {
         document.body.style.opacity = "1";
 
         startTextAnimation();
+        createConfetti(50); // Создаем конфетти при загрузке
     }
 }
 
@@ -75,6 +96,7 @@ function startTextAnimation() {
         animateTextByWords(paragraphText, textElement, 50, function () {
             // После завершения анимации абзаца, показываем коллаж
             showCollage();
+            createConfetti(30); // Добавляем конфетти после появления текста
         });
     });
 }
@@ -131,12 +153,13 @@ function animateTextByWords(text, element, delay, callback) {
 function showCollage() {
     const collageContainer = document.getElementById('collage-container');
     collageContainer.classList.add('visible');
+    createConfetti(20); // Добавляем конфетти при появлении коллажа
 }
 
 // Динамическое добавление мерцающих частиц
 document.addEventListener('DOMContentLoaded', function () {
     const container = document.querySelector('.collage-container');
-    const sparkleCount = 20;
+    const sparkleCount = 25;
 
     for (let i = 0; i < sparkleCount; i++) {
         const sparkle = document.createElement('div');
@@ -156,7 +179,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Добавляем сердца в прелоадер
     const preloaderHearts = document.getElementById('preloader-hearts');
-    for (let i = 0; i < 10; i++) {
+    for (let i = 0; i < 15; i++) {
         const heart = document.createElement('div');
         heart.classList.add('preloader-heart');
         heart.innerHTML = '♥';
@@ -176,3 +199,54 @@ document.addEventListener('DOMContentLoaded', function () {
     // Запускаем отсчет времени
     startTime = Date.now();
 });
+
+// Функция для создания конфетти
+function createConfetti(count) {
+    const colors = ['#ff7aa7', '#ffd9ec', '#e6c6e6', '#ffffff', '#8e5c9d'];
+
+    for (let i = 0; i < count; i++) {
+        const confetti = document.createElement('div');
+        confetti.classList.add('confetti');
+
+        // Случайный цвет
+        const color = colors[Math.floor(Math.random() * colors.length)];
+        confetti.style.backgroundColor = color;
+
+        // Случайная форма
+        const shapes = ['circle', 'square', 'rectangle', 'heart'];
+        const shape = shapes[Math.floor(Math.random() * shapes.length)];
+
+        if (shape === 'circle') {
+            confetti.style.borderRadius = '50%';
+            confetti.style.width = '10px';
+            confetti.style.height = '10px';
+        } else if (shape === 'square') {
+            confetti.style.width = '10px';
+            confetti.style.height = '10px';
+        } else if (shape === 'rectangle') {
+            confetti.style.width = '15px';
+            confetti.style.height = '7px';
+        } else if (shape === 'heart') {
+            confetti.innerHTML = '♥';
+            confetti.style.backgroundColor = 'transparent';
+            confetti.style.color = color;
+            confetti.style.fontSize = '15px';
+            confetti.style.width = 'auto';
+            confetti.style.height = 'auto';
+        }
+
+        // Случайная позиция
+        const left = Math.random() * 100;
+        confetti.style.left = `${left}%`;
+
+        // Случайная задержка
+        confetti.style.animationDelay = `${Math.random() * 2}s`;
+
+        document.body.appendChild(confetti);
+
+        // Удаляем элемент после завершения анимации
+        setTimeout(() => {
+            confetti.remove();
+        }, 5000);
+    }
+}

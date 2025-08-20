@@ -4,10 +4,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Поздравление</title>
+    <title>С Днём Рождения!</title>
     <link
         href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Dancing+Script:wght@500&display=swap"
         rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="./style/main.css">
 </head>
 
@@ -18,13 +19,16 @@
             <div class="loader-inner"></div>
             <div class="loader-inner"></div>
         </div>
-        <div class="preloader-text">Загрузка ...</div>
-        <div class="preloader-subtext">Секунду, готовим сюрприз</div>
+        <div class="preloader-text">Загрузка волшебства...</div>
+        <div class="preloader-subtext"></div>
         <div class="progress-bar">
             <div class="progress" id="progress"></div>
         </div>
         <div class="hearts-container" id="preloader-hearts"></div>
     </div>
+
+    <!-- Частицы фона -->
+    <div id="particles-js"></div>
 
     <div class="header">
         <h1 id="animated-title"></h1>
@@ -63,9 +67,10 @@
     </div>
 
     <div class="footer">
-        <p>Пусть все мечты сбудутся❤️</p>
+        <p>Пусть все мечты сбудутся! ❤️</p>
     </div>
 
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
     <script src="./js/index.js"></script>
 </body>
 
