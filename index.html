@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Романтическое поздравление с Днём Рождения</title>
+    <title>Поздравление</title>
     <link
         href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Dancing+Script:wght@500&display=swap"
         rel="stylesheet">
@@ -192,6 +192,7 @@
             text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
             font-weight: 700;
             color: #ffd9ec;
+            line-height: 1.3;
         }
 
         .header p {
@@ -199,11 +200,20 @@
             font-style: italic;
             color: #e6c6e6;
             font-family: 'Dancing Script', cursive;
+            line-height: 1.4;
         }
 
         .collage-container {
             position: relative;
             perspective: 1000px;
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 1.5s ease, transform 1.5s ease;
+        }
+
+        .collage-container.visible {
+            opacity: 1;
+            transform: translateY(0);
         }
 
         .collage {
@@ -562,6 +572,33 @@
                 font-size: 1rem;
             }
         }
+
+        /* Новые стили для анимации букв */
+        .word {
+            display: inline-block;
+            white-space: nowrap;
+            margin-right: 0.3em;
+        }
+
+        .letter {
+            display: inline-block;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.5s ease, transform 0.5s ease;
+        }
+
+        .space {
+            display: inline-block;
+            width: 0.3em;
+        }
+
+        .header p .word {
+            margin-right: 0.4em;
+        }
+
+        .header p .letter {
+            transform: translateY(10px);
+        }
     </style>
 </head>
 
@@ -572,8 +609,8 @@
             <div class="loader-inner"></div>
             <div class="loader-inner"></div>
         </div>
-        <div class="preloader-text">Загрузка волшебства...</div>
-        <div class="preloader-subtext">Секундочку, готовим сюрприз</div>
+        <div class="preloader-text">Загрузка ...</div>
+        <div class="preloader-subtext">Секунду, готовим сюрприз</div>
         <div class="progress-bar">
             <div class="progress" id="progress"></div>
         </div>
@@ -581,11 +618,11 @@
     </div>
 
     <div class="header">
-        <h1>С Днём Рождения !!!</h1>
-        <p>Пусть каждый момент этого дня будет наполнен счастьем, как наши лучшие воспоминания вместе</p>
+        <h1 id="animated-title"></h1>
+        <p id="animated-text"></p>
     </div>
 
-    <div class="collage-container">
+    <div class="collage-container" id="collage-container">
         <div class="collage">
             <div class="photo-frame photo1">
                 <img src="./img/test1.jpg" alt="Наше фото 1" onload="imageLoaded()">
@@ -665,6 +702,9 @@
 
                 // Показываем основное содержимое
                 document.body.style.opacity = "1";
+
+                // Запускаем анимацию текста
+                startTextAnimation();
             }
         }
 
@@ -678,6 +718,78 @@
                 checkIfReadyToHide();
             }
         }, 10000);
+
+        // Функция для анимации текста
+        function startTextAnimation() {
+            const titleText = "С Днём Рождения !!!";
+            const paragraphText = "Пусть каждый момент этого дня будет наполнен счастьем, как наши лучшие воспоминания вместе";
+
+            const titleElement = document.getElementById('animated-title');
+            const textElement = document.getElementById('animated-text');
+
+            // Анимируем заголовок
+            animateTextByWords(titleText, titleElement, 100, function () {
+                // После завершения анимации заголовка, начинаем анимацию абзаца
+                animateTextByWords(paragraphText, textElement, 50, function () {
+                    // После завершения анимации абзаца, показываем коллаж
+                    showCollage();
+                });
+            });
+        }
+
+        function animateTextByWords(text, element, delay, callback) {
+            // Очищаем элемент
+            element.innerHTML = '';
+
+            // Разбиваем текст на слова
+            const words = text.split(' ');
+
+            // Создаем контейнеры для каждого слова
+            words.forEach((word, wordIndex) => {
+                const wordSpan = document.createElement('span');
+                wordSpan.className = 'word';
+
+                // Обрабатываем каждый символ в слове
+                for (let i = 0; i < word.length; i++) {
+                    const letter = word[i];
+                    const span = document.createElement('span');
+                    span.textContent = letter;
+                    span.className = 'letter';
+                    wordSpan.appendChild(span);
+                }
+
+                element.appendChild(wordSpan);
+
+                // Добавляем пробел после слова (кроме последнего)
+                if (wordIndex < words.length - 1) {
+                    const spaceSpan = document.createElement('span');
+                    spaceSpan.className = 'space';
+                    spaceSpan.innerHTML = '&nbsp;';
+                    element.appendChild(spaceSpan);
+                }
+            });
+
+            // Собираем все буквы для анимации
+            const allLetters = element.querySelectorAll('.letter');
+
+            // Анимируем каждую букву с задержкой
+            allLetters.forEach((letter, index) => {
+                setTimeout(() => {
+                    letter.style.opacity = 1;
+                    letter.style.transform = 'translateY(0)';
+
+                    // Если это последняя буква, вызываем callback
+                    if (index === allLetters.length - 1 && callback) {
+                        setTimeout(callback, 300);
+                    }
+                }, index * delay);
+            });
+        }
+
+        function showCollage() {
+            const collageContainer = document.getElementById('collage-container');
+            collageContainer.classList.add('visible');
+        }
 
         // Динамическое добавление мерцающих частиц
         document.addEventListener('DOMContentLoaded', function () {
